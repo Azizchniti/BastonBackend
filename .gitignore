@@ -1,0 +1,22 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+
+# Environment files
+.env
+
+# Dependency directories
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker build files
+Dockerfile
+docker-compose.yml
+
+# System files
+.DS_Store
+Thumbs.db
