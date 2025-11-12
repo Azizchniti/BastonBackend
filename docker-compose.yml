@@ -3,9 +3,6 @@ version: "3.8"
 services:
   backend:
     image: azizchniti0410/baston-backend:latest
-    container_name: baston-backend
-    ports:
-      - "5000:5000"
     environment:
       - PORT=5000
       - SUPABASE_URL=https://dgdoitwzewaczbagciuk.supabase.co
@@ -13,3 +10,15 @@ services:
       - JWT_SECRET=B0pk3q01Wn4zhIxoWFhBuR3z9jtX2mH5AnEJF6PDxRwIuifI32Lv1xF7XldeikqK0UCvrEc9hDiVqFQr18jMiQ==
       - SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRnZG9pdHd6ZXdhY3piYWdjaXVrIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2MDM2NDQyOSwiZXhwIjoyMDc1OTQwNDI5fQ.z8NqjNEUvTwGo1lXaZPuXgCF7JnDCmmB6T4YNLsD110
     restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`baston.agenciafocomkt.com.br`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls.certresolver=myresolver"
+      - "traefik.http.services.backend.loadbalancer.server.port=5000"
+    networks:
+      - internal-platform-backend_default
+
+networks:
+  internal-platform-backend_default:
+    external: true
