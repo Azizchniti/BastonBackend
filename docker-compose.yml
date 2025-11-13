@@ -3,6 +3,7 @@ version: "3.8"
 services:
   backend:
     image: azizchniti0410/baston-backend:latest
+    container_name: baston-backend
     environment:
       - PORT=5000
       - SUPABASE_URL=https://dgdoitwzewaczbagciuk.supabase.co
@@ -14,11 +15,11 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=Host(`api.baston.agenciafocomkt.com.br`) && PathPrefix(`/api`)"
       - "traefik.http.routers.backend.entrypoints=websecure"
-      - "traefik.http.routers.backend.tls.certresolver=myresolver"
+      - "traefik.http.routers.backend.tls.certresolver=letsencryptresolver"
       - "traefik.http.services.backend.loadbalancer.server.port=5000"
     networks:
-      - internal-platform-backend_default
+      - Technet  # ✅ Connect to same network as Traefik
 
 networks:
-  internal-platform-backend_default:
+  Technet:
     external: true
