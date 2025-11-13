@@ -7,7 +7,17 @@ import { sendTaskToN8N } from "../utils/n8nAgent.js";
 export const createTaskController = async (req, res) => {
   try {
     const { title, description, department_id, deadline } = req.body;
-    const created_by = req.user.id;
+    const authId = req.user.id;
+      const { data: userRecord, error: userLookupError } = await supabaseAdmin
+      .from("users")
+      .select("id")
+      .eq("auth_id", authId)
+      .single();
+        if (userLookupError || !userRecord) {
+      throw new Error("Usuário não encontrado no banco de dados.");
+    }
+
+    const created_by = userRecord.id;
 
     console.log("➡️ createTaskController body:", req.body);
     console.log("➡️ Auth user:", req.user);
