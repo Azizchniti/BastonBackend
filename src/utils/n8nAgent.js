@@ -20,7 +20,7 @@ export const sendTaskToN8N = async (newTask, departmentName, userData, userDepar
     };
 
     const response = await fetch(
-      "https://webhook.agenciafocomkt.com.br/webhook/af4da324-7f87-4c24-92f7-59d162e6a05e",
+      "https://webhook.agenciafocomkt.com.br/webhook/f77dcc2e-bf68-40e5-9231-06293e29bec7",
       {
         method: "POST",
         headers: {
