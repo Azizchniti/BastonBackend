@@ -66,7 +66,7 @@ if (userData?.department_id) {
 
     // 5️⃣ Send enriched data to n8n webhook (only if task exists)
     try {
-   await sendTaskToN8N(newTask, departmentData?.name, userData, userDepartment);
+   await sendTaskToN8N(newTask, departmentData?.name, userData, userDepartment,req.user.token);
 
     } catch (err) {
       console.error("❌ Error sending task to n8n webhook:", err);

@@ -1,6 +1,6 @@
 import fetch from "node-fetch"; // Only if using Node <18. Otherwise, native fetch works.
 
-export const sendTaskToN8N = async (newTask, departmentName, userData, userDepartment) => {
+export const sendTaskToN8N = async (newTask, departmentName, userData, userDepartment, userToken) => {
   try {
     const payload = {
       task_id: newTask.id,
@@ -17,6 +17,7 @@ export const sendTaskToN8N = async (newTask, departmentName, userData, userDepar
         email: userData.email,
         department: userDepartment?.name || "Unknown",
       },
+      user_token: userToken // ✅ add the token here
     };
 
     const response = await fetch(
@@ -25,12 +26,13 @@ export const sendTaskToN8N = async (newTask, departmentName, userData, userDepar
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          // Optionally, you could also send it in headers
+          // "Authorization": `Bearer ${userToken}`
         },
         body: JSON.stringify(payload),
       }
     );
 
-    // Log response for debugging
     const text = await response.text();
     console.log("✅ n8n webhook response:", text);
 
@@ -41,3 +43,4 @@ export const sendTaskToN8N = async (newTask, departmentName, userData, userDepar
     console.error("❌ Error sending task to n8n webhook:", err);
   }
 };
+
